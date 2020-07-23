@@ -8,9 +8,8 @@ import styled from "styled-components";
 const Square = styled.div`
   display: inline-block;
   border: 1px solid black;
-  width: ${scale}px;
-  height: ${scale}px;
-  margin: 0;
+  width: ${scale - 1}px;
+  height: ${scale - 1}px;
   margin-left: -1px;
   margin-bottom: -1px;
 

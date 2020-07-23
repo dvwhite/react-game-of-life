@@ -17,6 +17,7 @@ const GridDiv = styled(CenteredDiv)`
   margin: auto;
   border: 1px solid black;
   line-height: 0;
+  box-shadow: 2px 4px 8px #444;
 `;
 
 const Grid = ({ rows, cols, cells }) => {
