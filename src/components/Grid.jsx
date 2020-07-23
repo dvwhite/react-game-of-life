@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { scale } from "../constants/constants";
-import "../index.css";
+import "../index.scss";
 
 // Component imports
 import Cell from "./Cell";

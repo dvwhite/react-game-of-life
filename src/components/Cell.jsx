@@ -1,6 +1,6 @@
 import React from "react";
 import { scale } from "../constants/constants";
-import "../index.css";
+import "../index.scss";
 
 // Styled component imports
 import styled from "styled-components";

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { scale, width, height } from "./constants/constants";
-import "./App.css";
+import "./App.scss";
 
 // Helper functions
 import { create2dArray } from "./utils/utils";
@@ -10,8 +10,8 @@ import Grid from "./components/Grid";
 
 function App() {
   const [cells, setCells] = useState([]);
-  const rows = width / scale;
-  const cols = height / scale;
+  const rows = Math.floor(width / scale);
+  const cols = Math.floor(height / scale);
 
   // Initialize the 2D array of game state when the component mounts
   useEffect(() => {
