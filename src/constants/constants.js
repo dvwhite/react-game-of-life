@@ -1,6 +1,5 @@
-const singleCellWidth = 20;
-const singleCellHeight = 20;
-const ROWS = 25;
-const COLS = 25;
+const scale = 40;
+const height = 400;
+const width = 400;
 
-export { singleCellHeight, singleCellWidth, ROWS, COLS };
+export { scale, height, width };
