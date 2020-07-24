@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { scale } from "../constants/constants";
+import { cellSize } from "../constants/constants";
 import "../index.scss";
-
-// Helper functions
-import { checkAdjacentCells } from "../utils/utils";
 
 // Component imports
 import Cell from "./Cell";
@@ -25,47 +22,32 @@ const GridDiv = styled(CenteredDiv)`
   resize: none;
 `;
 
-const Grid = ({ rows, cols, cells }) => {
-  const [grid, setGrid] = useState(cells);
-
+const Grid = ({ rows, cols, cells, text, setCells, setIsAlive }) => {
   // Set the grid size
-  const width = rows * scale;
-  const height = cols * scale;
+  const width = rows * cellSize;
+  const height = cols * cellSize;
 
-  useEffect(() => {
-    const arr = [...cells];
-    cells.map((rowArr, row) =>
-      rowArr.map(
-        (colObj, col) => (arr[row][col] = { row, col, isAlive: false })
-      )
-    );
-    console.log("Arr finished:", arr);
-    setGrid(arr);
-  }, [cells]);
-
-  useEffect(() => {
-    if (grid.length) {
-      checkAdjacentCells(grid[0][0], grid);
-    }
-  }, [grid]);
-
-  if (!grid) return <div>Loading...</div>;
+  if (!cells) return <div>Loading...</div>;
 
   return (
-    <GridDiv style={{ width: width, height: height }}>
-      {grid.map((rowArr, row) =>
+    <GridDiv style={{ minWidth: width, width: width, height: height }}>
+      {cells.map((rowArr, row) =>
         rowArr.map((colArr, col) => {
-          const cell = grid[row][col];
+          const cell = cells[row][col];
+          console.log(cell);
           return (
             <Cell
-              row={cell.row}
-              col={cell.col}
+              cell={cell}
               key={`R${cell.col}C${cell.row}`}
-              isAlive={cell.isAlive}
+              alive={cell.isAlive}
+              cells={cells}
+              setCells={setCells}
+              setIsAlive={setIsAlive}
             />
           );
         })
       )}
+      <h2>{text}</h2>
     </GridDiv>
   );
 };
