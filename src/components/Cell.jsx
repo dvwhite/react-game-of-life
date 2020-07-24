@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { scale } from "../constants/constants";
 import "../index.scss";
 
 // Styled component imports
@@ -7,8 +8,8 @@ import styled from "styled-components";
 const Square = styled.div`
   display: inline-block;
   border: 1px solid black;
-  width: 8.125%;
-  height: 8.125%;
+  width: ${scale - 1}px;
+  height: ${scale - 1}px;
   margin-bottom: -1px;
   margin-left: -1px;
 
@@ -19,13 +20,20 @@ const Square = styled.div`
 
 const Cell = ({ alive }) => {
   const [isAlive, setIsAlive] = useState(alive);
-  const handleClick = (e) => {
+
+  // Change the cell on click or drag
+  const changeColor = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     setIsAlive(!isAlive);
   };
 
   return (
-    <Square className={isAlive ? "alive" : "dead"} onClick={handleClick} />
+    <Square
+      className={isAlive ? "alive" : "dead"}
+      onClick={changeColor}
+      onDrag={changeColor}
+    />
   );
 };
 
