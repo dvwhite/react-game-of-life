@@ -3,9 +3,9 @@ import React from "react";
 // Styled component imports
 import styled from "styled-components";
 
-const TextBox = styled.div`
+const TextContainer = styled.div`
   border: 1px solid black;
-  width: 40%;
+  width: 95%;
   margin-top: 2%;
   margin-right: 10%;
   display: flex;
@@ -28,7 +28,7 @@ const TextArea = styled.div`
 
 const Desc = () => {
   return (
-    <TextBox>
+    <TextContainer>
       <TextArea>
         <h2>The Rules</h2>
         <p>
@@ -48,7 +48,7 @@ const Desc = () => {
           cell, as if by reproduction.
         </p>
       </TextArea>
-    </TextBox>
+    </TextContainer>
   );
 };
 
