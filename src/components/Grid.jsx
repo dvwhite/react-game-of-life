@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { scale } from "../constants/constants";
-import "../index.css";
+import "../index.scss";
 
 // Component imports
 import Cell from "./Cell";
@@ -14,10 +14,12 @@ const CenteredDiv = styled.div`
 `;
 
 const GridDiv = styled(CenteredDiv)`
-  margin: auto;
-  border: 1px solid black;
+  margin-left: 6%;
+  margin-top: 2%;
   line-height: 0;
   box-shadow: 2px 4px 8px #444;
+  overflow: hidden;
+  resize: none;
 `;
 
 const Grid = ({ rows, cols, cells }) => {
@@ -28,15 +30,11 @@ const Grid = ({ rows, cols, cells }) => {
   return (
     <GridDiv style={{ width: width, height: height }}>
       {cells.map((row, idx) =>
-        row.map((col) => (
-          <Cell
-            row={row}
-            col={col}
-            key={idx}
-            isAlive={true}
-            id={`R${row}C${col}`}
-          />
-        ))
+        row.map((col, idx2) => {
+          return (
+            <Cell row={row} col={col} key={`R${idx}C${idx2}`} isAlive={false} />
+          );
+        })
       )}
     </GridDiv>
   );

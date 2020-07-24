@@ -1,5 +1,5 @@
 const scale = 40;
-const height = 400;
-const width = 400;
+const height = 550;
+const width = 550;
 
 export { scale, height, width };
