@@ -7,10 +7,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-alive {
+.dead {
   background-color: whitesmoke;
 }
 
-dead {
-  background-color: black;
+.alive {
+  background-color: #444;
 }
