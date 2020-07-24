@@ -1,4 +1,4 @@
-const scale = 40;
+const scale = 20;
 const height = 550;
 const width = 550;
 
