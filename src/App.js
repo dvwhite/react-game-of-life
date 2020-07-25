@@ -27,7 +27,6 @@ const Column = styled.div`
 
 function App() {
   const [cells, setCells] = useState([]);
-  const [text, setText] = useState("Hello");
   const rows = Math.floor(width / cellSize);
   const cols = Math.floor(height / cellSize);
 
@@ -41,39 +40,19 @@ function App() {
         (colObj, col) => (cellsArr[row][col] = { row, col, isAlive: false })
       )
     );
-    console.log("Arr finished:", cellsArr);
     setCells(cellsArr);
   }, []);
 
-  const setIsAlive = (row, col, isAlive) => {
-    cells[row][col].isAlive = isAlive;
-    setCells(cells);
-    console.log("click", cells[row][col]);
-  };
-
   const handleClick = (e) => {
     e.preventDefault();
-    //recalculateGrid(cells);
-    setCells([
-      [{ col: 0, row: 0, isAlive: false }],
-      [{ col: 0, row: 1, isAlive: true }],
-    ]);
-    setText("David");
-    console.log(cells);
+    setCells(recalculateGrid(cells));
   };
 
   return (
     <div className="App">
       <h1>Conway's Game of Life</h1>
       <Container>
-        <Grid
-          rows={rows}
-          cols={cols}
-          cells={cells}
-          setCells={setCells}
-          setIsAlive={setIsAlive}
-          text={text}
-        />
+        <Grid rows={rows} cols={cols} cells={cells} setCells={setCells} />
         <Column>
           <Desc />
           <ButtonGroup>

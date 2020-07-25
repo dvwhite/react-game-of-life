@@ -5,7 +5,6 @@ const create2dArray = (rows, cols, value) => {
 function checkAdjacentCells(cell, grid) {
   // Define the area to search
   // The 8 cells adjacent, including wrapping around
-  console.log("Original:", grid);
   const rows = grid.length;
   const cols = grid[0].length;
   const leftCol = cell.col - 1 < 0 ? cols - 1 : cell.col - 1;
@@ -34,28 +33,40 @@ function checkAdjacentCells(cell, grid) {
   ];
   // Return the total number of living adjacent cells
   //console.log(adjacent_cells.filter((cell) => cell.isAlive));
-  const num_alive = adjacent_cells.reduce((acc, cell) => acc + cell.isAlive, 0);
-  console.log(adjacent_cells, num_alive);
+  // const num_alive = adjacent_cells.reduce((acc, cell) => acc + cell.isAlive, 0);
+  let num_alive = 0;
+  for (let cell of adjacent_cells) {
+    if (cell.isAlive) {
+      num_alive += 1;
+    }
+  }
   return num_alive;
 }
 
 function recalculateGrid(grid) {
   // Check the grid cell neighbors and return a modified grid
   // following the rules of Conway's Game of Life
-  const next_grid = [...grid];
-  for (let row = 0; row < next_grid.length; row++) {
-    for (let col = 0; col < next_grid[0].length; col++) {
-      const cell = next_grid[row][col];
+  const rows = grid.length;
+  const cols = grid[0].length;
+
+  // Create a new copy of the current array
+  const next_grid = create2dArray(rows, cols, {
+    row: 0,
+    col: 0,
+    isAlive: false,
+  });
+
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      const cell = grid[row][col];
       const total_alive = checkAdjacentCells(cell, grid);
-      if (total_alive >= 2 || total_alive <= 3) {
-        grid[row][col].isAlive = true;
+      if (total_alive === 2 || total_alive === 3) {
+        next_grid[row][col] = { row, col, isAlive: true };
       } else {
-        grid[row][col].isAlive = false;
+        next_grid[row][col] = { row, col, isAlive: false };
       }
     }
   }
-  console.log("Old grid:", grid);
-  console.log("Next grid:", next_grid);
   return next_grid;
 }
 

@@ -22,7 +22,7 @@ const GridDiv = styled(CenteredDiv)`
   resize: none;
 `;
 
-const Grid = ({ rows, cols, cells, text, setCells, setIsAlive }) => {
+const Grid = ({ rows, cols, cells, setCells }) => {
   // Set the grid size
   const width = rows * cellSize;
   const height = cols * cellSize;
@@ -34,7 +34,6 @@ const Grid = ({ rows, cols, cells, text, setCells, setIsAlive }) => {
       {cells.map((rowArr, row) =>
         rowArr.map((colArr, col) => {
           const cell = cells[row][col];
-          console.log(cell);
           return (
             <Cell
               cell={cell}
@@ -42,12 +41,10 @@ const Grid = ({ rows, cols, cells, text, setCells, setIsAlive }) => {
               alive={cell.isAlive}
               cells={cells}
               setCells={setCells}
-              setIsAlive={setIsAlive}
             />
           );
         })
       )}
-      <h2>{text}</h2>
     </GridDiv>
   );
 };
