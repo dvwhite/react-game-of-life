@@ -9,13 +9,12 @@ const create2dArray = (rows, cols, value) => {
 };
 
 const checkGrid = (row, col, grid) => {
-  const row_limit = grid.length - 1;
-  const col_limit = grid[0].length - 1;
-  if (row < 0 || row > row_limit || col < 0 || col > col_limit) {
-    return 0;
-  } else {
-    return grid[row][col].isAlive;
-  }
+  const row_limit = grid.length;
+  const col_limit = grid[0].length;
+
+  const new_row = (row + row_limit) % row_limit;
+  const new_col = (col + col_limit) % col_limit;
+  return grid[new_row][new_col].isAlive;
 };
 
 function countAdjacentLivingCells(cell, grid) {
