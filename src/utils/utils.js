@@ -1,62 +1,76 @@
 const create2dArray = (rows, cols, value) => {
-  return [...Array(rows)].map(() => Array(cols).fill(value));
+  const arr = [...Array(rows)].map(() => Array(cols).fill(value));
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      arr[row][col] = { row, col, isAlive: false };
+    }
+  }
+  return arr;
 };
 
-function checkAdjacentCells(cell, grid) {
-  // Define the area to search
-  // The 8 cells adjacent, including wrapping around
-  console.log("Original:", grid);
-  const rows = grid.length;
-  const cols = grid[0].length;
-  const leftCol = cell.col - 1 < 0 ? cols - 1 : cell.col - 1;
-  const rightCol = cell.col + 1 > cols - 1 ? 0 : cell.col + 1;
-  const rowAbove = cell.row - 1 < 0 ? rows - 1 : cell.row - 1;
-  const rowBelow = cell.row + 1 > rows - 1 ? 0 : cell.row + 1;
-  const currRow = cell.row;
-  const currCol = cell.col;
+const checkGrid = (row, col, grid) => {
+  const row_limit = grid.length;
+  const col_limit = grid[0].length;
 
-  // These are the cells located at the:
-  // top left, top middle, top right,
-  // mid left, mid right,
-  // bottom left, bottom middle, bottom right
-  const adjacent_cells = [
-    // Top row
-    grid[rowAbove][leftCol],
-    grid[rowAbove][currCol],
-    grid[rowAbove][rightCol],
-    // Middle row
-    grid[currRow][leftCol],
-    grid[currRow][rightCol],
-    // Bottom row
-    grid[rowBelow][leftCol],
-    grid[rowBelow][currCol],
-    grid[rowBelow][rightCol],
+  const new_row = (row + row_limit) % row_limit;
+  const new_col = (col + col_limit) % col_limit;
+  return grid[new_row][new_col].isAlive;
+};
+
+function countAdjacentLivingCells(cell, grid) {
+  // Return the count of all living cells
+  const adjacent_cell_values = [
+    checkGrid(cell.row - 1, cell.col - 1, grid),
+    checkGrid(cell.row - 1, cell.col, grid),
+    checkGrid(cell.row - 1, cell.col + 1, grid),
+    checkGrid(cell.row, cell.col - 1, grid),
+    checkGrid(cell.row, cell.col + 1, grid),
+    checkGrid(cell.row + 1, cell.col - 1, grid),
+    checkGrid(cell.row + 1, cell.col, grid),
+    checkGrid(cell.row + 1, cell.col + 1, grid),
   ];
+
   // Return the total number of living adjacent cells
-  //console.log(adjacent_cells.filter((cell) => cell.isAlive));
-  const num_alive = adjacent_cells.reduce((acc, cell) => acc + cell.isAlive, 0);
-  console.log(adjacent_cells, num_alive);
-  return num_alive;
+  return adjacent_cell_values.reduce((a, b) => a + b, 0);
 }
 
 function recalculateGrid(grid) {
   // Check the grid cell neighbors and return a modified grid
   // following the rules of Conway's Game of Life
-  const next_grid = [...grid];
-  for (let row = 0; row < next_grid.length; row++) {
-    for (let col = 0; col < next_grid[0].length; col++) {
-      const cell = next_grid[row][col];
-      const total_alive = checkAdjacentCells(cell, grid);
-      if (total_alive >= 2 || total_alive <= 3) {
-        grid[row][col].isAlive = true;
-      } else {
-        grid[row][col].isAlive = false;
+  const rows = grid.length;
+  const cols = grid[0].length;
+
+  // Create a new copy of the current array
+  const next_grid = create2dArray(rows, cols, {
+    row: 0,
+    col: 0,
+    isAlive: false,
+  });
+
+  // Iterate over the grid and calculate the number of living
+  // adjacent cells for each cell in the grid
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      const cell = grid[row][col];
+      const total_alive = countAdjacentLivingCells(cell, grid);
+      // Apply the Conway rules to the grid cells
+
+      // Underpopulation
+      if (cell.isAlive && total_alive < 2) {
+        next_grid[row][col] = { ...cell, isAlive: false };
+        // Survival
+      } else if (cell.isAlive && (total_alive === 2 || total_alive === 3)) {
+        next_grid[row][col] = { ...cell, isAlive: true };
+        // Overpopulation
+      } else if (cell.isAlive && total_alive > 3) {
+        next_grid[cell.row][cell.col] = { ...cell, isAlive: false };
+        // Reproduction
+      } else if (!cell.isAlive && total_alive === 3) {
+        next_grid[cell.row][cell.col] = { ...cell, isAlive: true };
       }
     }
   }
-  console.log("Old grid:", grid);
-  console.log("Next grid:", next_grid);
   return next_grid;
 }
 
-export { create2dArray, checkAdjacentCells, recalculateGrid };
+export { create2dArray, countAdjacentLivingCells, recalculateGrid };

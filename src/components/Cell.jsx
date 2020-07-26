@@ -18,7 +18,7 @@ const Square = styled.div`
   }
 `;
 
-const Cell = ({ cell, setIsAlive, cells, setCells }) => {
+const Cell = ({ cell, cells, setCells }) => {
   // Change the cell on click
   const changeColor = (e) => {
     e.preventDefault();
