@@ -13,6 +13,11 @@ const GrayButton = styled.button`
   &:active {
     box-shadow: 0px 1px 1px #444;
   }
+
+  &:hover {
+    background-color: #444;
+    color: white;
+  }
 `;
 
 export { GrayButton };

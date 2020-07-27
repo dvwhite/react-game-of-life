@@ -27,6 +27,7 @@ const Column = styled.div`
 
 function App() {
   const [cells, setCells] = useState([]);
+  const [nextCells, setNextCells] = useState([]);
   const rows = Math.floor(width / cellSize);
   const cols = Math.floor(height / cellSize);
 
@@ -35,24 +36,29 @@ function App() {
     // Populate the grid with objects for each cell that track information
     // such as whether it is alive or dead, and it's row, col pos
     const cellsArr = create2dArray(rows, cols, 0);
-    cellsArr.map((rowArr, row) =>
-      rowArr.map(
-        (colObj, col) => (cellsArr[row][col] = { row, col, isAlive: false })
-      )
-    );
+    const nextCellsArr = create2dArray(rows, cols, 0);
     setCells(cellsArr);
+    setNextCells(nextCellsArr);
   }, []);
 
   const handleClick = (e) => {
     e.preventDefault();
-    setCells(recalculateGrid(cells));
+    const nextGrid = recalculateGrid(cells, nextCells);
+    setNextCells(cells);
+    setCells(nextGrid);
   };
 
   return (
     <div className="App">
       <h1>Conway's Game of Life</h1>
       <Container>
-        <Grid rows={rows} cols={cols} cells={cells} setCells={setCells} />
+        <Grid
+          rows={rows}
+          cols={cols}
+          cells={cells}
+          setCells={setCells}
+          setNextCells={setNextCells}
+        />
         <Column>
           <Desc />
           <ButtonGroup>

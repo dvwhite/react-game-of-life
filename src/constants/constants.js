@@ -1,5 +1,5 @@
 const cellSize = 20;
-const height = 200;
-const width = 200;
+const height = 550;
+const width = 550;
 
 export { cellSize, height, width };
