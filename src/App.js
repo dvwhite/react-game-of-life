@@ -55,7 +55,7 @@ function App() {
     return () => {
       clearInterval(timer);
     };
-  }, [isRunning, cells, nextCells]);
+  }, [isRunning, cells, nextCells, generations]);
 
   const initializeGrids = () => {
     // Populate the grid with objects for each cell that track information
@@ -140,7 +140,7 @@ function App() {
             <GrayButton onClick={handleClickStep}>Step</GrayButton>
             <GrayButton onClick={handleClickReset}>Reset</GrayButton>
           </ButtonGroup>
-          <p>Generations: {generations}</p>
+          <h3>Generations: {generations}</h3>
         </Column>
       </Container>
     </div>
