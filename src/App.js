@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { cellSize, width, height } from "./constants/constants";
+import { cellSize, width, height, speed } from "./constants/constants";
 import "./App.scss";
 import "./index.scss";
 
@@ -23,29 +23,97 @@ const Column = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 1%;
+  padding-bottom: 2%;
 `;
 
 function App() {
   const [cells, setCells] = useState([]);
   const [nextCells, setNextCells] = useState([]);
+  const [isRunning, setIsRunning] = useState(false);
   const rows = Math.floor(width / cellSize);
   const cols = Math.floor(height / cellSize);
 
   // Initialize the 2D array of game state when the component mounts
   useEffect(() => {
+    initializeGrids();
+  }, []);
+
+  useEffect(() => {
+    let timer;
+    if (isRunning) {
+      timer = setInterval(() => {
+        console.log("Timer is running!");
+        step();
+      }, 1000);
+    } else {
+      clearInterval(timer);
+    }
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [isRunning]);
+
+  const initializeGrids = () => {
     // Populate the grid with objects for each cell that track information
     // such as whether it is alive or dead, and it's row, col pos
     const cellsArr = create2dArray(rows, cols, 0);
     const nextCellsArr = create2dArray(rows, cols, 0);
     setCells(cellsArr);
     setNextCells(nextCellsArr);
-  }, []);
+  };
 
-  const handleClick = (e) => {
-    e.preventDefault();
+  // Actions
+  const start = () => {
+    // Start running the simuation
+    setIsRunning(true);
+  };
+
+  const stop = () => {
+    // Stop running the simuation
+    setIsRunning(false);
+  };
+
+  const step = () => {
+    // Go to the next generation of the grid
+    console.log("Stepping");
     const nextGrid = recalculateGrid(cells, nextCells);
+    console.log(nextGrid);
     setNextCells(cells);
     setCells(nextGrid);
+  };
+
+  const reset = () => {
+    // Reset the grid
+    setIsRunning(false);
+    initializeGrids();
+  };
+
+  // Button handlers
+  const handleClickStart = (e) => {
+    //  Start
+    e.preventDefault();
+    start();
+  };
+
+  const handleClickStop = (e) => {
+    // Stop
+    e.preventDefault();
+    stop();
+  };
+
+  const handleClickStep = (e) => {
+    // Step
+    e.preventDefault();
+    if (!isRunning) {
+      step();
+    }
+  };
+
+  const handleClickReset = (e) => {
+    // Reset
+    e.preventDefault();
+    reset();
   };
 
   return (
@@ -58,11 +126,15 @@ function App() {
           cells={cells}
           setCells={setCells}
           setNextCells={setNextCells}
+          isRunning={isRunning}
         />
         <Column>
           <Desc />
           <ButtonGroup>
-            <GrayButton onClick={handleClick}>Next Generation</GrayButton>
+            <GrayButton onClick={handleClickStart}>Start</GrayButton>
+            <GrayButton onClick={handleClickStop}>Stop</GrayButton>
+            <GrayButton onClick={handleClickStep}>Step</GrayButton>
+            <GrayButton onClick={handleClickReset}>Reset</GrayButton>
           </ButtonGroup>
         </Column>
       </Container>

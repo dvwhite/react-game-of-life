@@ -67,6 +67,8 @@ function recalculateGrid(grid, last_grid) {
         // Reproduction
       } else if (!cell.isAlive && total_alive === 3) {
         next_grid[cell.row][cell.col] = { ...cell, isAlive: true };
+      } else {
+        next_grid[cell.row][cell.col] = { ...cell, isAlive: cell.isAlive };
       }
     }
   }
