@@ -18,13 +18,15 @@ const Square = styled.div`
   }
 `;
 
-const Cell = ({ cell, cells, setCells }) => {
+const Cell = ({ cell, cells, setCells, isRunning }) => {
   // Change the cell on click
   const changeColor = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    cells[cell.row][cell.col] = { ...cell, isAlive: !cell.isAlive };
-    setCells([...cells]);
+    if (!isRunning) {
+      cells[cell.row][cell.col] = { ...cell, isAlive: !cell.isAlive };
+      setCells([...cells]);
+    }
   };
 
   return (
