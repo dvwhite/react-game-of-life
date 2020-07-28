@@ -42,9 +42,10 @@ function App() {
     let timer;
     if (isRunning) {
       timer = setInterval(() => {
-        console.log("Timer is running!");
-        step();
-      }, 1000);
+        const nextGrid = recalculateGrid(cells, nextCells);
+        setNextCells(cells);
+        setCells(nextGrid);
+      }, speed);
     } else {
       clearInterval(timer);
     }
@@ -52,7 +53,7 @@ function App() {
     return () => {
       clearInterval(timer);
     };
-  }, [isRunning]);
+  }, [isRunning, cells, nextCells]);
 
   const initializeGrids = () => {
     // Populate the grid with objects for each cell that track information
@@ -78,7 +79,6 @@ function App() {
     // Go to the next generation of the grid
     console.log("Stepping");
     const nextGrid = recalculateGrid(cells, nextCells);
-    console.log(nextGrid);
     setNextCells(cells);
     setCells(nextGrid);
   };
