@@ -16,13 +16,13 @@ const CenteredDiv = styled.div`
 const GridDiv = styled(CenteredDiv)`
   margin-left: 6%;
   margin-top: 2%;
+  margin-bottom: 2%;
   line-height: 0;
   box-shadow: 2px 4px 8px #444;
-  overflow: hidden;
   resize: none;
 `;
 
-const Grid = ({ rows, cols, cells, setCells }) => {
+const Grid = ({ rows, cols, cells, setCells, isRunning }) => {
   // Set the grid size
   const width = rows * cellSize;
   const height = cols * cellSize;
@@ -41,6 +41,7 @@ const Grid = ({ rows, cols, cells, setCells }) => {
               alive={cell.isAlive}
               cells={cells}
               setCells={setCells}
+              isRunning={isRunning}
             />
           );
         })
