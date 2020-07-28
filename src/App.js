@@ -30,6 +30,7 @@ function App() {
   const [cells, setCells] = useState([]);
   const [nextCells, setNextCells] = useState([]);
   const [isRunning, setIsRunning] = useState(false);
+  const [generations, setGenerations] = useState(0);
   const rows = Math.floor(width / cellSize);
   const cols = Math.floor(height / cellSize);
 
@@ -45,6 +46,7 @@ function App() {
         const nextGrid = recalculateGrid(cells, nextCells);
         setNextCells(cells);
         setCells(nextGrid);
+        setGenerations(generations + 1);
       }, speed);
     } else {
       clearInterval(timer);
@@ -81,12 +83,14 @@ function App() {
     const nextGrid = recalculateGrid(cells, nextCells);
     setNextCells(cells);
     setCells(nextGrid);
+    setGenerations(generations + 1);
   };
 
   const reset = () => {
     // Reset the grid
     setIsRunning(false);
     initializeGrids();
+    setGenerations(0);
   };
 
   // Button handlers
@@ -136,6 +140,7 @@ function App() {
             <GrayButton onClick={handleClickStep}>Step</GrayButton>
             <GrayButton onClick={handleClickReset}>Reset</GrayButton>
           </ButtonGroup>
+          <p>Generations: {generations}</p>
         </Column>
       </Container>
     </div>

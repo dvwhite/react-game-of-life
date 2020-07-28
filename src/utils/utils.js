@@ -1,4 +1,6 @@
 const create2dArray = (rows, cols, value) => {
+  // Create a blank 2D array populated with default values
+  // for the game's cell grid
   const arr = [...Array(rows)].map(() => Array(cols).fill(value));
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
@@ -41,6 +43,8 @@ function recalculateGrid(grid, last_grid) {
   // Use double buffering techniques to compute how many living grid cell
   // neighbors for each grid node and return a modified grid following
   // the rules of Conway's Game of Life
+
+  // The rows and cols assume a 2D array
   const rows = grid.length;
   const cols = grid[0].length;
 
