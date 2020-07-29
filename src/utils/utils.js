@@ -59,24 +59,51 @@ function recalculateGrid(grid, last_grid) {
       const total_alive = countAdjacentLivingCells(cell, grid);
       // Apply the Conway rules to the grid cells
 
-      // Underpopulation
-      if (cell.isAlive && total_alive < 2) {
-        next_grid[row][col] = { ...cell, isAlive: false };
-        // Survival
-      } else if (cell.isAlive && (total_alive === 2 || total_alive === 3)) {
-        next_grid[row][col] = { ...cell, isAlive: true };
-        // Overpopulation
-      } else if (cell.isAlive && total_alive > 3) {
+      // Overpopulation, Underpopulation
+      if (total_alive < 2 || total_alive > 3) {
         next_grid[cell.row][cell.col] = { ...cell, isAlive: false };
         // Reproduction
       } else if (!cell.isAlive && total_alive === 3) {
         next_grid[cell.row][cell.col] = { ...cell, isAlive: true };
+        // Unchanged
       } else {
-        next_grid[cell.row][cell.col] = { ...cell, isAlive: cell.isAlive };
+        next_grid[cell.row][cell.col] = cell;
       }
     }
   }
   return next_grid;
 }
 
-export { create2dArray, countAdjacentLivingCells, recalculateGrid };
+function randomizeGrid(grid, last_grid) {
+  // Use double buffering techniques to compute how many living grid cell
+  // neighbors for each grid node and return a modified grid following
+  // the rules of Conway's Game of Life
+
+  // The rows and cols assume a 2D array
+  const rows = grid.length;
+  const cols = grid[0].length;
+
+  // Create a new copy of the current array
+  const next_grid = last_grid;
+
+  // Iterate over the grid and calculate the number of living
+  // adjacent cells for each cell in the grid
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      // Randomize the cell
+      next_grid[row][col] = {
+        row,
+        col,
+        isAlive: Math.random() >= 0.85 ? true : false,
+      };
+    }
+  }
+  return next_grid;
+}
+
+export {
+  create2dArray,
+  countAdjacentLivingCells,
+  recalculateGrid,
+  randomizeGrid,
+};

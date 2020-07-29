@@ -4,7 +4,7 @@ import "./App.scss";
 import "./index.scss";
 
 // Helper functions
-import { create2dArray, recalculateGrid } from "./utils/utils";
+import { create2dArray, recalculateGrid, randomizeGrid } from "./utils/utils";
 
 // Component imports
 import Grid from "./components/Grid";
@@ -121,6 +121,16 @@ function App() {
     reset();
   };
 
+  const handleClickRandom = (e) => {
+    // Randomize
+    e.preventDefault();
+    if (!isRunning) {
+      const nextGrid = randomizeGrid(cells, nextCells);
+      setNextCells(cells);
+      setCells(nextGrid);
+    }
+  };
+
   return (
     <div className="App">
       <h1>Conway's Game of Life</h1>
@@ -139,6 +149,7 @@ function App() {
             <GrayButton onClick={handleClickStart}>Start</GrayButton>
             <GrayButton onClick={handleClickStop}>Stop</GrayButton>
             <GrayButton onClick={handleClickStep}>Step</GrayButton>
+            <GrayButton onClick={handleClickRandom}>Random</GrayButton>
             <GrayButton onClick={handleClickReset}>Reset</GrayButton>
           </ButtonGroup>
           <h3>Generations: {generations}</h3>
