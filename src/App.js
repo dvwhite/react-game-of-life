@@ -23,7 +23,9 @@ const Column = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 1%;
+  margin-right: 2%;
   padding-bottom: 2%;
+  width: 33%;
 `;
 
 function App() {
@@ -79,7 +81,6 @@ function App() {
 
   const step = () => {
     // Go to the next generation of the grid
-    console.log("Stepping");
     const nextGrid = recalculateGrid(cells, nextCells);
     setNextCells(cells);
     setCells(nextGrid);

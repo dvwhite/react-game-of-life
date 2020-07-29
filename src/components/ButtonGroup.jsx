@@ -8,7 +8,6 @@ const ButtonGroup = styled.div`
   flex-flow: row wrap;
   justify-content: space-between;
   margin-top: 2%;
-  width: 95%;
 `;
 
 export default ButtonGroup;

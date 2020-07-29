@@ -14,7 +14,7 @@ const CenteredDiv = styled.div`
 `;
 
 const GridDiv = styled(CenteredDiv)`
-  margin-left: 6%;
+  margin-left: 2%;
   margin-top: 2%;
   margin-bottom: 2%;
   line-height: 0;
