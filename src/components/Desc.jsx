@@ -5,11 +5,8 @@ import styled from "styled-components";
 
 const TextContainer = styled.div`
   border: 1px solid black;
-  width: 95%;
-  margin-top: 2%;
-  margin-right: 10%;
   display: flex;
-  align-self: flex-start;
+  align-self: center;
   flex-direction: column;
 `;
 

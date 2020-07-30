@@ -10,13 +10,9 @@ import styled from "styled-components";
 
 const CenteredDiv = styled.div`
   margin: auto;
-  margin-top: 1rem;
 `;
 
 const GridDiv = styled(CenteredDiv)`
-  margin-left: 6%;
-  margin-top: 2%;
-  margin-bottom: 2%;
   line-height: 0;
   box-shadow: 2px 4px 8px #444;
   resize: none;
