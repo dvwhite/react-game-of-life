@@ -4,11 +4,17 @@ import "./App.scss";
 import "./index.scss";
 
 // Helper functions
-import { create2dArray, recalculateGrid, randomizeGrid } from "./utils/utils";
+import {
+  create2dArray,
+  recalculateGrid,
+  randomizeGrid,
+  presetGrid,
+} from "./utils/utils";
 
 // Component imports
 import Grid from "./components/Grid";
 import Desc from "./components/Desc";
+import Dropdown from "./components/Dropdown";
 import ButtonGroup from "./components/ButtonGroup";
 import { GrayButton } from "./components/Button";
 
@@ -19,12 +25,34 @@ const Container = styled.div`
   display: flex;
 `;
 
+const Row = styled.div`
+  display: flex;
+  justify-content: space-around;
+  background-color: lightgray;
+  color: black;
+  border: 1px solid black;
+  border-top: 0;
+
+  & > p {
+    font-weight: bold;
+  }
+`;
+
 const Column = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 1%;
+`;
+
+const GridColumn = styled(Column)`
+  margin-top: 2%;
+  margin-left: 2%;
+  margin-bottom: 2%;
+`;
+
+const TextColumn = styled(Column)`
+  margin-top: 2%;
   margin-right: 2%;
-  padding-bottom: 2%;
+  margin-left: 2%;
   width: 33%;
 `;
 
@@ -35,6 +63,7 @@ function App() {
   const [generations, setGenerations] = useState(0);
   const rows = Math.floor(width / cellSize);
   const cols = Math.floor(height / cellSize);
+  const presets = ["Glider", "Scrubber", "Pre-pulsar"];
 
   // Initialize the 2D array of game state when the component mounts
   useEffect(() => {
@@ -98,7 +127,9 @@ function App() {
   const handleClickStart = (e) => {
     //  Start
     e.preventDefault();
-    start();
+    if (!isRunning) {
+      start();
+    }
   };
 
   const handleClickStop = (e) => {
@@ -128,6 +159,16 @@ function App() {
       const nextGrid = randomizeGrid(cells, nextCells);
       setNextCells(cells);
       setCells(nextGrid);
+      setGenerations(0);
+    }
+  };
+
+  const handleSelect = (e) => {
+    if (!isRunning) {
+      const nextGrid = presetGrid(e.target.value, cells, nextCells);
+      setNextCells(cells);
+      setCells(nextGrid);
+      setGenerations(0);
     }
   };
 
@@ -135,16 +176,26 @@ function App() {
     <div className="App">
       <h1>Conway's Game of Life</h1>
       <Container>
-        <Grid
-          rows={rows}
-          cols={cols}
-          cells={cells}
-          setCells={setCells}
-          setNextCells={setNextCells}
-          isRunning={isRunning}
-        />
-        <Column>
+        <GridColumn>
+          <Grid
+            rows={rows}
+            cols={cols}
+            cells={cells}
+            setCells={setCells}
+            setNextCells={setNextCells}
+            isRunning={isRunning}
+          />
+        </GridColumn>
+        <TextColumn>
           <Desc />
+          <Row>
+            <p>Presets</p>
+            <Dropdown
+              options={presets}
+              onChange={(e) => handleSelect(e)}
+              placeholder="Select a preset"
+            />
+          </Row>
           <ButtonGroup>
             <GrayButton onClick={handleClickStart}>Start</GrayButton>
             <GrayButton onClick={handleClickStop}>Stop</GrayButton>
@@ -153,7 +204,7 @@ function App() {
             <GrayButton onClick={handleClickReset}>Reset</GrayButton>
           </ButtonGroup>
           <h3>Generations: {generations}</h3>
-        </Column>
+        </TextColumn>
       </Container>
     </div>
   );

@@ -5,7 +5,6 @@ import styled from "styled-components";
 
 const TextContainer = styled.div`
   border: 1px solid black;
-  margin-top: 2%;
   display: flex;
   align-self: center;
   flex-direction: column;
