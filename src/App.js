@@ -61,6 +61,7 @@ function App() {
   const [nextCells, setNextCells] = useState([]);
   const [isRunning, setIsRunning] = useState(false);
   const [generations, setGenerations] = useState(0);
+  const [selValue, setSelValue] = useState("Select a preset");
   const rows = Math.floor(width / cellSize);
   const cols = Math.floor(height / cellSize);
   const presets = ["Glider", "Scrubber", "Pre-pulsar"];
@@ -121,6 +122,7 @@ function App() {
     setIsRunning(false);
     initializeGrids();
     setGenerations(0);
+    setSelValue("Select a preset");
   };
 
   // Button handlers
@@ -165,6 +167,7 @@ function App() {
 
   const handleSelect = (e) => {
     if (!isRunning) {
+      setSelValue(e.target.value);
       const nextGrid = presetGrid(e.target.value, cells, nextCells);
       setNextCells(cells);
       setCells(nextGrid);
@@ -193,7 +196,8 @@ function App() {
             <Dropdown
               options={presets}
               onChange={(e) => handleSelect(e)}
-              placeholder="Select a preset"
+              placeholder={"Select a preset"}
+              value={selValue}
             />
           </Row>
           <ButtonGroup>
