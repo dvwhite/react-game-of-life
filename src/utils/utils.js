@@ -101,9 +101,92 @@ function randomizeGrid(grid, last_grid) {
   return next_grid;
 }
 
+function presetGrid(option, grid, last_grid) {
+  // Return a grid with the selected preset
+  // The rows and cols assume a 2D array
+  const rows = grid.length;
+  const cols = grid[0].length;
+
+  // Create a new copy of the current array
+  const next_grid = last_grid;
+
+  // Add the preset
+  const starting_row = Math.floor(rows / 2);
+  const starting_col = Math.floor(cols / 2);
+  const presets = {
+    glider: [
+      [starting_row, starting_col - 1],
+      [starting_row, starting_col + 1],
+      [starting_row - 1, starting_col + 1],
+      [starting_row + 1, starting_col],
+      [starting_row + 1, starting_col + 1],
+    ],
+    scrubber: [
+      [starting_row - 2, starting_col - 1],
+      [starting_row - 2, starting_col],
+      [starting_row - 2, starting_col + 1],
+      [starting_row + 2, starting_col - 1],
+      [starting_row + 2, starting_col],
+      [starting_row + 2, starting_col + 1],
+      [starting_row - 1, starting_col - 2],
+      [starting_row, starting_col - 2],
+      [starting_row + 1, starting_col - 2],
+      [starting_row - 1, starting_col + 2],
+      [starting_row, starting_col + 2],
+      [starting_row + 1, starting_col + 2],
+      [starting_row - 5, starting_col - 1],
+      [starting_row - 4, starting_col - 1],
+      [starting_row - 4, starting_col - 2],
+      [starting_row - 4, starting_col - 3],
+      [starting_row - 3, starting_col - 4],
+      [starting_row - 2, starting_col - 4],
+      [starting_row - 1, starting_col - 4],
+      [starting_row - 1, starting_col - 5],
+      [starting_row + 5, starting_col + 1],
+      [starting_row + 4, starting_col + 1],
+      [starting_row + 4, starting_col + 2],
+      [starting_row + 4, starting_col + 3],
+      [starting_row + 3, starting_col + 4],
+      [starting_row + 2, starting_col + 4],
+      [starting_row + 1, starting_col + 4],
+      [starting_row + 1, starting_col + 5],
+    ],
+    "pre-pulsar": [
+      [starting_row, starting_col - 1],
+      [starting_row, starting_col - 2],
+      [starting_row, starting_col - 3],
+      [starting_row + 1, starting_col - 4],
+      [starting_row, starting_col - 4],
+      [starting_row - 1, starting_col - 4],
+      [starting_row, starting_col - 5],
+      [starting_row, starting_col],
+      [starting_row, starting_col + 1],
+      [starting_row, starting_col + 2],
+      [starting_row, starting_col + 3],
+      [starting_row - 1, starting_col + 4],
+      [starting_row, starting_col + 4],
+      [starting_row + 1, starting_col + 4],
+      [starting_row, starting_col + 5],
+    ],
+  };
+
+  // Iterate over the grid and calculate the number of living
+  // adjacent cells for each cell in the grid
+  const coords = presets[option.toLowerCase()];
+  if (coords) {
+    for (let coord of coords) {
+      console.log(coord);
+      const [row, col] = coord;
+      next_grid[row][col].isAlive = true;
+    }
+  }
+  return next_grid;
+}
+
 export {
   create2dArray,
   countAdjacentLivingCells,
   recalculateGrid,
   randomizeGrid,
+  presetGrid,
 };
