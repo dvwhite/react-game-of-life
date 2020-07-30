@@ -101,6 +101,18 @@ function randomizeGrid(grid, last_grid) {
   return next_grid;
 }
 
+function clearGrid(grid) {
+  // Convert all cells on the grid to dead cells
+  const rows = grid.length;
+  const cols = grid[0].length;
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      // Convert the cell
+      grid[row][col].isAlive = false;
+    }
+  }
+}
+
 function presetGrid(option, grid, last_grid) {
   // Return a grid with the selected preset
   // The rows and cols assume a 2D array
@@ -109,10 +121,11 @@ function presetGrid(option, grid, last_grid) {
 
   // Create a new copy of the current array
   const next_grid = last_grid;
+  clearGrid(next_grid);
 
   // Add the preset
-  const starting_row = Math.floor(rows / 2);
-  const starting_col = Math.floor(cols / 2);
+  const starting_row = parseInt(Math.floor(rows / 2));
+  const starting_col = parseInt(Math.floor(cols / 2));
   const presets = {
     glider: [
       [starting_row, starting_col - 1],
@@ -175,7 +188,6 @@ function presetGrid(option, grid, last_grid) {
   const coords = presets[option.toLowerCase()];
   if (coords) {
     for (let coord of coords) {
-      console.log(coord);
       const [row, col] = coord;
       next_grid[row][col].isAlive = true;
     }
