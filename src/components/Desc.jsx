@@ -18,7 +18,7 @@ const TextArea = styled.div`
   }
 
   p {
-    margin: 2%;
+    margin: 1%;
     padding: 1%;
   }
 `;
@@ -27,6 +27,18 @@ const Desc = () => {
   return (
     <TextContainer>
       <TextArea>
+        <h2>The Game of Life</h2>
+        <p>
+          The Game of Life is a zero player, cellular automata game created by
+          mathematician John Horton Conway in 1970. The board is a
+          two-dimensional grid of cells which can either be alive or dead.
+        </p>
+        <p>
+          The game can be used to build a finite state machine with two
+          counters, as well as AND, NOT and OR logic gates using gliders. This
+          allows the game to serve as a universal Turing machine (it is Turing
+          complete).
+        </p>
         <h2>The Rules</h2>
         <p>
           1. Any live cell with fewer than two live neighbours dies, as if by
