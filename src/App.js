@@ -23,6 +23,7 @@ import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;
+  justify-content: center;
 `;
 
 const Row = styled.div`
@@ -53,7 +54,7 @@ const TextColumn = styled(Column)`
   margin-top: 2%;
   margin-right: 2%;
   margin-left: 2%;
-  width: 33%;
+  width: 50%;
 `;
 
 function App() {
